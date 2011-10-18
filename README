@@ -1,1 +1,2 @@
+[2011.10.19 00:00] tag v0.1.0 released (only base64 encode/decode)
 [begin] Recover old design (ebase64) begining refactoring
