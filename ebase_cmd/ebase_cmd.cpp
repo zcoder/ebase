@@ -6,7 +6,7 @@
  * Refactoring on October 18, 2011, 17:48 MSK
  */
 
-#include "base_lib.h"
+#include "../ebase_lib/ebase_lib.h"
 #include <stdio.h>
 #include <iostream>
 #include <stdlib.h>
@@ -112,7 +112,7 @@ int base64(bool decode = false, const char *in_filename = NULL, const char* out_
 /*
  * base64_main(int argc, char** argv) called from term
  */
-int main(int argc, char** argv) {
+int main_cmd(int argc, char** argv) {
 
     int do_decode   = 0;
     int do_encode   = 0;
@@ -229,7 +229,7 @@ int main(int argc, char** argv) {
 #endif
 
     if ( do_help || do_verbose ) {
-        fprintf( stderr, "eBase64 (enhanced Base64 tool) v0.0.%d \n\n", argc );
+        fprintf( stderr, "eBase (enhanced Base tool) v0.1.0 \n\n", argc );
         fprintf( stderr, " Usage: %s \n", argv[0] );
         fprintf( stderr, "        %s [-e|-d] -i[INPUT_FILE] -o[OUTPUT_FILE] -t[TABLE_NAME]\n", argv[0] );
         fprintf( stderr, "        %s [--encode|--decode] --input=[INPUT_FILE] --output=[OUTPUT_FILE] --table=[TABLE_NAME]\n", argv[0] );

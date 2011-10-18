@@ -1,17 +1,12 @@
 /* 
- * File:   base_lib.h
+ * File:   ebase_tables.h
  * Author: zhenka
  *
- * Created on July 4, 2011, 3:56 PM
+ * Created on 18 Октябрь 2011 г., 19:39
  */
 
-#ifndef BASE64LIB_H
-#define	BASE64LIB_H
-
-#include <stdint.h>
-
-int base64_decode_block(const char*, const uint32_t, char*, const uint32_t, const char*);
-int base64_encode_block(const char*, const uint32_t, char*, const uint32_t, const char*);
+#ifndef EBASE_TABLES_H
+#define	EBASE_TABLES_H
 
 static const char etable_rfc[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 static const char etable_url[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_\0";
@@ -575,5 +570,6 @@ static const tables b64_tables[] = {
     {0,0,0}
 };
 
-#endif	/* BASE64LIB_H */
+
+#endif	/* EBASE_TABLES_H */
 
