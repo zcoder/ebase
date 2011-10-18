@@ -7,6 +7,7 @@
  */
 
 #include "../ebase_lib/ebase_lib.h"
+#include "../ebase_lib/ebase_tables.h"
 #include <stdio.h>
 #include <iostream>
 #include <stdlib.h>

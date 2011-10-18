@@ -64,7 +64,7 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libebase_dbg.so: ${OBJECTFILES}
 ${OBJECTDIR}/ebase_lib.o: ebase_lib.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -g -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/ebase_lib.o ebase_lib.cpp
+	$(COMPILE.cc) -g -DDEBUG_OPT -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/ebase_lib.o ebase_lib.cpp
 
 # Subprojects
 .build-subprojects:

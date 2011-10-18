@@ -36,6 +36,11 @@
         <compilerSet>default</compilerSet>
       </toolsSet>
       <compileType>
+        <ccTool>
+          <preprocessorList>
+            <Elem>DEBUG_OPT</Elem>
+          </preprocessorList>
+        </ccTool>
         <linkerTool>
           <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libebase_dbg.so</output>
         </linkerTool>

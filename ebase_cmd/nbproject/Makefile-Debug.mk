@@ -64,18 +64,19 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ebase_cmd_dbg: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/ebase_cmd_dbg ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
-${OBJECTDIR}/main.o: main.cpp 
+${OBJECTDIR}/main.o: nbproject/Makefile-${CND_CONF}.mk main.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -g -DDEBUG_OPT -MMD -MP -MF $@.d -o ${OBJECTDIR}/main.o main.cpp
 
-${OBJECTDIR}/ebase_cmd.o: ebase_cmd.cpp 
+${OBJECTDIR}/ebase_cmd.o: nbproject/Makefile-${CND_CONF}.mk ebase_cmd.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -g -DDEBUG_OPT -MMD -MP -MF $@.d -o ${OBJECTDIR}/ebase_cmd.o ebase_cmd.cpp
 
 # Subprojects
 .build-subprojects:
+	cd ../ebase_lib && ${MAKE}  -f Makefile CONF=Debug
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
@@ -84,6 +85,7 @@ ${OBJECTDIR}/ebase_cmd.o: ebase_cmd.cpp
 
 # Subprojects
 .clean-subprojects:
+	cd ../ebase_lib && ${MAKE}  -f Makefile CONF=Debug clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl
