@@ -34,6 +34,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/version_lib.o \
 	${OBJECTDIR}/ebase_lib.o
 
 
@@ -61,10 +62,15 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libebase_dbg.so: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -shared -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libebase_dbg.so -fPIC ${OBJECTFILES} ${LDLIBSOPTIONS} 
 
+${OBJECTDIR}/version_lib.o: version_lib.cc version_lib.sh
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -DDEBUG_OPT -D__VERSION_LIB__="\"`sh version_lib.sh -n`\"" -D__VER_LIB__="\"`sh version_lib.sh -VERSION`\"" -D__BUILD_LIB__="\"`sh version_lib.sh -BUILD`\"" -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/version_lib.o version_lib.cc
+
 ${OBJECTDIR}/ebase_lib.o: ebase_lib.cpp 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
-	$(COMPILE.cc) -g -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/ebase_lib.o ebase_lib.cpp
+	$(COMPILE.cc) -g -DDEBUG_OPT -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/ebase_lib.o ebase_lib.cpp
 
 # Subprojects
 .build-subprojects:

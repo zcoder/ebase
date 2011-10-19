@@ -7,6 +7,10 @@
  */
 
 #include "../ebase_lib/ebase_lib.h"
+#include "../ebase_lib/ebase_tables.h"
+#include "../ebase_lib/version_lib.h"
+#include "version_cmd.h"
+
 #include <stdio.h>
 #include <iostream>
 #include <stdlib.h>
@@ -108,6 +112,32 @@ int base64(bool decode = false, const char *in_filename = NULL, const char* out_
     return size_out_write_total;
 }
 
+int help( int argc, char** argv ) 
+{
+        fprintf( stderr, "eBase (enhanced Base tool) v%s.%s \n\n", VER_CMD, BUILD_CMD);
+        fprintf( stderr, " Usage: %s \n", argv[0] );
+        fprintf( stderr, "        %s [-e|-d] -i[INPUT_FILE] -o[OUTPUT_FILE] -t[TABLE_NAME]\n", argv[0] );
+        fprintf( stderr, "        %s [--encode|--decode] --input=[INPUT_FILE] --output=[OUTPUT_FILE] --table=[TABLE_NAME]\n", argv[0] );
+        fprintf( stderr, "        %s [-e|-d] [INPUT_FILE] [OUTPUT_FILE] [TABLE_NAME]\n", argv[0] );
+        fprintf( stderr, " Base64 encode or decode INPUT_FILE, or standart input, to OUTPUT_FILE or standart output with TABLE_NAME or rfc base64 table\n\n" );
+        fprintf( stderr, " \t-e|--encode           encode data (-e is *default)\n" );
+        fprintf( stderr, " \t-d|--decode           decode data\n" );
+        fprintf( stderr, " \t-i|--input=           input file (stdin is *default)\n" );
+        fprintf( stderr, " \t-o|--output=          output file (stdout is *default)\n" );
+        fprintf( stderr, " \t-t|--table=           ebase64 table may be [rfc|url|xmlt|xmli]  (rfc is *default)\n\n" );
+        fprintf( stderr, " \t-h|--help             display this help and exit\n" );
+        fprintf( stderr, " \n" );
+        fprintf( stderr, " You may combine any rational parameter for usage, but count of params without opts [-i|-o|-t] may be less 4.\n"\
+                         " The data are encoded as described for the base64 alphabet in RFC 3548 or other [TABLE_NAME].\n"\
+                         " When decoding, the input may contain newlines in addition to the bytes of the formal base64 alphabet.\n" );
+        fprintf( stderr, "\n" );
+        for (int i=0; NULL != b64_tables[i].table_name; i++) {
+            fprintf( stderr, " table [%s] is [%s]\n", b64_tables[i].table_name, b64_tables[i].etable_ptr );
+        }
+        fprintf( stderr, "\n" );
+}
+
+
 //#define DEBUG
 /*
  * base64_main(int argc, char** argv) called from term
@@ -117,7 +147,8 @@ int main_cmd(int argc, char** argv) {
     int do_decode   = 0;
     int do_encode   = 0;
     int do_help     = 0;
-    int do_verbose  = 0;
+    int do_version_cmd = 0;
+    int do_version_lib = 0;
     int do_if_name  = 0;
     int do_of_name  = 0;
     int do_tab_name = 0;
@@ -133,11 +164,12 @@ int main_cmd(int argc, char** argv) {
         { "output", required_argument,  NULL, 'o'},
         { "table",  required_argument,  NULL, 't'},
         { "help",   no_argument,        &do_help,   'h' },
-        { "verbose",no_argument,        &do_verbose,   'v' },
+        { "version",no_argument,        &do_version_cmd,   'v' },
+        { "libversion",no_argument,     &do_version_lib,   'l' },
         { 0,        0,                  0,          0}
     };
 
-    while ( (getop = getopt_long( argc, argv, "-:edhvi:o:t:W;", longopts, NULL )) != -1 ) {
+    while ( (getop = getopt_long( argc, argv, "-:edhvli:o:t:W;", longopts, NULL )) != -1 ) {
 
         switch ( getop ) {
             case 'e':
@@ -159,9 +191,15 @@ int main_cmd(int argc, char** argv) {
 #endif
                 break;
             case 'v':
-                do_verbose = 1;
+                do_version_cmd = 1;
 #ifdef DEBUG_OPT
                 fprintf( stderr, "v_%c\n", getop);
+#endif
+                break;
+            case 'l':
+                do_version_lib = 1;
+#ifdef DEBUG_OPT
+                fprintf( stderr, "l_%c\n", getop);
 #endif
                 break;
             case 'i':
@@ -228,33 +266,25 @@ int main_cmd(int argc, char** argv) {
     fprintf( stderr,"input=%s\toutput=%s\ttable=%s\n", if_name, of_name, table_name );
 #endif
 
-    if ( do_help || do_verbose ) {
-        fprintf( stderr, "eBase (enhanced Base tool) v0.1.0 \n\n", argc );
-        fprintf( stderr, " Usage: %s \n", argv[0] );
-        fprintf( stderr, "        %s [-e|-d] -i[INPUT_FILE] -o[OUTPUT_FILE] -t[TABLE_NAME]\n", argv[0] );
-        fprintf( stderr, "        %s [--encode|--decode] --input=[INPUT_FILE] --output=[OUTPUT_FILE] --table=[TABLE_NAME]\n", argv[0] );
-        fprintf( stderr, "        %s [-e|-d] [INPUT_FILE] [OUTPUT_FILE] [TABLE_NAME]\n", argv[0] );
-        fprintf( stderr, " Base64 encode or decode INPUT_FILE, or standart input, to OUTPUT_FILE or standart output with TABLE_NAME or rfc base64 table\n\n" );
-        fprintf( stderr, " \t-e|--encode           encode data (-e is *default)\n" );
-        fprintf( stderr, " \t-d|--decode           decode data\n" );
-        fprintf( stderr, " \t-i|--input=           input file (stdin is *default)\n" );
-        fprintf( stderr, " \t-o|--output=          output file (stdout is *default)\n" );
-        fprintf( stderr, " \t-t|--table=           ebase64 table may be [rfc|url|xmlt|xmli]  (rfc is *default)\n\n" );
-        fprintf( stderr, " \t-h|--help             display this help and exit\n" );
-        fprintf( stderr, " \n" );
-        fprintf( stderr, " You may combine any rational parameter for usage, but count of params without opts [-i|-o|-t] may be less 4.\n"\
-                         " The data are encoded as described for the base64 alphabet in RFC 3548 or other [TABLE_NAME].\n"\
-                         " When decoding, the input may contain newlines in addition to the bytes of the formal base64 alphabet.\n" );
-        fprintf( stderr, "\n" );
-        for (int i=0; NULL != b64_tables[i].table_name; i++) {
-            fprintf( stderr, " table [%s] is [%s]\n", b64_tables[i].table_name, b64_tables[i].etable_ptr );
-        }
-        fprintf( stderr, "\n" );
+    if ( do_help ) {
+        help(argc,argv);
+    }
     
-        return 0;
+    if ( do_version_cmd ) 
+    {
+        version_cmd();
     }
 
-
+    if ( do_version_lib )
+    {
+        version_lib();
+    }
+    
+    if (do_help || do_version_cmd || do_version_lib) 
+    {
+        return 0;
+    }
+    
     if ( do_tab_name && NULL != table_name ) {
         for (int i=0; NULL != b64_tables[i].table_name; i++){
             if (!strncasecmp( table_name ,b64_tables[i].table_name, 4)) {

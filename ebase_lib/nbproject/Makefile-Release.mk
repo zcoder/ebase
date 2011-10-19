@@ -34,6 +34,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/version_lib.o \
 	${OBJECTDIR}/ebase_lib.o
 
 
@@ -60,6 +61,11 @@ LDLIBSOPTIONS=
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libebase.so: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.cc} -shared -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libebase.so -fPIC ${OBJECTFILES} ${LDLIBSOPTIONS} 
+
+${OBJECTDIR}/version_lib.o: version_lib.cc version_lib.sh
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -O2 -D__VERSION_LIB__="\"`sh version_lib.sh -n`\"" -D__VER_LIB__="\"`sh version_lib.sh -VERSION`\"" -D__BUILD_LIB__="\"`sh version_lib.sh -BUILD`\"" -fPIC  -MMD -MP -MF $@.d -o ${OBJECTDIR}/version_lib.o version_lib.cc
 
 ${OBJECTDIR}/ebase_lib.o: ebase_lib.cpp 
 	${MKDIR} -p ${OBJECTDIR}

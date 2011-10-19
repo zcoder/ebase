@@ -5,12 +5,14 @@
                    displayName="Исходные файлы "
                    projectFiles="true">
       <itemPath>ebase_lib.cpp</itemPath>
+      <itemPath>version_lib.cc</itemPath>
     </logicalFolder>
     <logicalFolder name="HeaderFiles"
                    displayName="Файлы заголовков"
                    projectFiles="true">
       <itemPath>ebase_lib.h</itemPath>
       <itemPath>ebase_tables.h</itemPath>
+      <itemPath>version_lib.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Файлы ресурсов"
@@ -26,6 +28,7 @@
                    projectFiles="false"
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
+      <itemPath>info.sh</itemPath>
     </logicalFolder>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
@@ -36,10 +39,22 @@
         <compilerSet>default</compilerSet>
       </toolsSet>
       <compileType>
+        <ccTool>
+          <preprocessorList>
+            <Elem>DEBUG_OPT</Elem>
+          </preprocessorList>
+        </ccTool>
         <linkerTool>
           <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libebase_dbg.so</output>
         </linkerTool>
       </compileType>
+      <item path="version_lib.cc" ex="false" tool="1" flavor="0">
+        <ccTool>
+          <commandLine>-D__VERSION_LIB__="\"`sh version_lib.sh -n`\"" -D__VER_LIB__="\"`sh version_lib.sh -VERSION`\"" -D__BUILD_LIB__="\"`sh version_lib.sh -BUILD`\""</commandLine>
+          <warningLevel>1</warningLevel>
+          <additionalDep>version_lib.sh</additionalDep>
+        </ccTool>
+      </item>
     </conf>
     <conf name="Release" type="2">
       <toolsSet>
@@ -63,6 +78,12 @@
           <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libebase.so</output>
         </linkerTool>
       </compileType>
+      <item path="version_lib.cc" ex="false" tool="1" flavor="0">
+        <ccTool>
+          <commandLine>-D__VERSION_LIB__="\"`sh version_lib.sh -n`\"" -D__VER_LIB__="\"`sh version_lib.sh -VERSION`\"" -D__BUILD_LIB__="\"`sh version_lib.sh -BUILD`\""</commandLine>
+          <additionalDep>version_lib.sh</additionalDep>
+        </ccTool>
+      </item>
     </conf>
   </confs>
 </configurationDescriptor>

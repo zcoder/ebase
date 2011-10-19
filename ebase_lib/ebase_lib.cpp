@@ -1,5 +1,6 @@
 
 #include "ebase_lib.h"
+#include "ebase_tables.h"
 #include <stdio.h>
 
 using namespace std;
@@ -13,7 +14,7 @@ using namespace std;
  *          const char* table = table_rfc   - table for decode data
  */
 int base64_decode_block(const char* in, const uint32_t in_size, char* out, const uint32_t out_size, const char* table = NULL) {
-
+   
     register uint32_t in_block = 0;
     register uint32_t out_block = 0;
     register uint32_t out_block1 = 0;
