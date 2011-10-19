@@ -35,7 +35,8 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/main.o \
-	${OBJECTDIR}/ebase_cmd.o
+	${OBJECTDIR}/ebase_cmd.o \
+	${OBJECTDIR}/version_cmd.o
 
 
 # C Compiler Flags
@@ -73,6 +74,11 @@ ${OBJECTDIR}/ebase_cmd.o: nbproject/Makefile-${CND_CONF}.mk ebase_cmd.cpp
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} $@.d
 	$(COMPILE.cc) -g -DDEBUG_OPT -MMD -MP -MF $@.d -o ${OBJECTDIR}/ebase_cmd.o ebase_cmd.cpp
+
+${OBJECTDIR}/version_cmd.o: nbproject/Makefile-${CND_CONF}.mk version_cmd.cc version_cmd.sh
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} $@.d
+	$(COMPILE.cc) -g -DDEBUG_OPT -D__VERSION_CMD__="\"`sh version_cmd.sh -n`\"" -D__VER_CMD__="\"`sh version_cmd.sh -VERSION`\"" -D__BUILD_CMD__="\"`sh version_cmd.sh -BUILD`\"" -MMD -MP -MF $@.d -o ${OBJECTDIR}/version_cmd.o version_cmd.cc
 
 # Subprojects
 .build-subprojects:
