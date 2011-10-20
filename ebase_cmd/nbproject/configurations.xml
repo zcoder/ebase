@@ -22,6 +22,14 @@
                    displayName="Файлы тестов"
                    projectFiles="false"
                    kind="TEST_LOGICAL_FOLDER">
+      <logicalFolder name="f1"
+                     displayName="test_encode_decode_functional"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>../common/error/error.cpp</itemPath>
+        <itemPath>../common/run/run.cpp</itemPath>
+        <itemPath>tests/test_enc_dec.cpp</itemPath>
+      </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Важные файлы"
@@ -75,6 +83,25 @@
           </makeArtifact>
         </requiredProjects>
       </compileType>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+            <pElem>.</pElem>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+            <pElem>.</pElem>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+        </linkerTool>
+      </folder>
       <item path="version_cmd.cc" ex="false" tool="1" flavor="0">
         <ccTool>
           <commandLine>-D__VERSION_CMD__="\"`sh version_cmd.sh -n`\"" -D__VER_CMD__="\"`sh version_cmd.sh -VERSION`\"" -D__BUILD_CMD__="\"`sh version_cmd.sh -BUILD`\""</commandLine>
@@ -130,6 +157,25 @@
           </makeArtifact>
         </requiredProjects>
       </compileType>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+            <pElem>.</pElem>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+            <pElem>.</pElem>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+        </linkerTool>
+      </folder>
       <item path="version_cmd.cc" ex="false" tool="1" flavor="0">
         <ccTool>
           <commandLine>-D__VERSION_CMD__="\"`sh version_cmd.sh -n`\"" -D__VER_CMD__="\"`sh version_cmd.sh -VERSION`\"" -D__BUILD_CMD__="\"`sh version_cmd.sh -BUILD`\""</commandLine>

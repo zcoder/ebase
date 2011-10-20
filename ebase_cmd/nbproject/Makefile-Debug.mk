@@ -38,6 +38,12 @@ OBJECTFILES= \
 	${OBJECTDIR}/ebase_cmd.o \
 	${OBJECTDIR}/version_cmd.o
 
+# Test Directory
+TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
+
+# Test Files
+TESTFILES= \
+	${TESTDIR}/TestFiles/f1
 
 # C Compiler Flags
 CFLAGS=
@@ -83,6 +89,79 @@ ${OBJECTDIR}/version_cmd.o: nbproject/Makefile-${CND_CONF}.mk version_cmd.cc ver
 # Subprojects
 .build-subprojects:
 	cd ../ebase_lib && ${MAKE}  -f Makefile CONF=Debug
+
+# Build Test Targets
+.build-tests-conf: .build-conf ${TESTFILES}
+${TESTDIR}/TestFiles/f1: ${TESTDIR}/_ext/1310910675/error.o ${TESTDIR}/_ext/637728746/run.o ${TESTDIR}/tests/test_enc_dec.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.cc}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} 
+
+
+${TESTDIR}/_ext/1310910675/error.o: ../common/error/error.cpp 
+	${MKDIR} -p ${TESTDIR}/_ext/1310910675
+	${RM} $@.d
+	$(COMPILE.cc) -g -DDEBUG_OPT -I. -I. -I. -MMD -MP -MF $@.d -o ${TESTDIR}/_ext/1310910675/error.o ../common/error/error.cpp
+
+
+${TESTDIR}/_ext/637728746/run.o: ../common/run/run.cpp 
+	${MKDIR} -p ${TESTDIR}/_ext/637728746
+	${RM} $@.d
+	$(COMPILE.cc) -g -DDEBUG_OPT -I. -I. -I. -MMD -MP -MF $@.d -o ${TESTDIR}/_ext/637728746/run.o ../common/run/run.cpp
+
+
+${TESTDIR}/tests/test_enc_dec.o: tests/test_enc_dec.cpp 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} $@.d
+	$(COMPILE.cc) -g -DDEBUG_OPT -I. -I. -I. -MMD -MP -MF $@.d -o ${TESTDIR}/tests/test_enc_dec.o tests/test_enc_dec.cpp
+
+
+${OBJECTDIR}/main_nomain.o: ${OBJECTDIR}/main.o main.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/main.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -g -DDEBUG_OPT -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/main_nomain.o main.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/main.o ${OBJECTDIR}/main_nomain.o;\
+	fi
+
+${OBJECTDIR}/ebase_cmd_nomain.o: ${OBJECTDIR}/ebase_cmd.o ebase_cmd.cpp 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/ebase_cmd.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -g -DDEBUG_OPT -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/ebase_cmd_nomain.o ebase_cmd.cpp;\
+	else  \
+	    ${CP} ${OBJECTDIR}/ebase_cmd.o ${OBJECTDIR}/ebase_cmd_nomain.o;\
+	fi
+
+${OBJECTDIR}/version_cmd_nomain.o: ${OBJECTDIR}/version_cmd.o version_cmd.cc version_cmd.sh
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/version_cmd.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} $@.d;\
+	    $(COMPILE.cc) -g -DDEBUG_OPT -D__VERSION_CMD__="\"`sh version_cmd.sh -n`\"" -D__VER_CMD__="\"`sh version_cmd.sh -VERSION`\"" -D__BUILD_CMD__="\"`sh version_cmd.sh -BUILD`\"" -Dmain=__nomain -MMD -MP -MF $@.d -o ${OBJECTDIR}/version_cmd_nomain.o version_cmd.cc;\
+	else  \
+	    ${CP} ${OBJECTDIR}/version_cmd.o ${OBJECTDIR}/version_cmd_nomain.o;\
+	fi
+
+# Run Test Targets
+.test-conf:
+	@if [ "${TEST}" = "" ]; \
+	then  \
+	    ${TESTDIR}/TestFiles/f1 || true; \
+	else  \
+	    ./${TEST} || true; \
+	fi
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
